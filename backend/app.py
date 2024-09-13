@@ -24,7 +24,6 @@ except Exception as e:
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Mapping of department names to collection field keys
 department_map = {
     "east campus": "eastCampus",
     "mba": "mbaMca",
