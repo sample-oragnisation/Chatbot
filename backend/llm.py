@@ -36,14 +36,14 @@ pipeline = transformers.pipeline(
 
 # Ngrok setup
 ngrok.set_auth_token("2lC10VNMNNHozy9qU2wBzosN3at_3QYjZW2FJ2sr1po7qXqqs")
-public_url = ngrok.connect(8000)
+listener = ngrok.forward("127.0.0.1:8000", authtoken_from_env=True, domain="sterling-python-willingly.ngrok-free.app")
 
 # MongoDB setup
 username = quote_plus('thissya129')
 password = quote_plus('Thissya129')
 uri = f'mongodb+srv://{username}:{password}@energymanagement.zn8ue.mongodb.net/?retryWrites=true&w=majority&appName=EnergyManagement'
 
-client = MongoClient(uri)
+client = MongoClient()
 db = client['energy_management']  # Replace with your actual database name
 
 user_histories = {}
@@ -138,6 +138,3 @@ async def message(request: ValidateRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-# Print the public URL
-print("Public URL:", public_url)
