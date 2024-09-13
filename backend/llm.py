@@ -5,7 +5,7 @@ import transformers
 import torch
 from transformers import AutoTokenizer
 from time import time
-import ngrok
+import pymongo
 from pymongo import MongoClient
 from urllib.parse import quote_plus
 
@@ -33,10 +33,6 @@ pipeline = transformers.pipeline(
     torch_dtype=torch.float16,
     device_map="auto"
 )
-
-# Ngrok setup
-ngrok.set_auth_token("2lC10VNMNNHozy9qU2wBzosN3at_3QYjZW2FJ2sr1po7qXqqs")
-listener = ngrok.forward("127.0.0.1:8000", authtoken_from_env=True, domain="sterling-python-willingly.ngrok-free.app")
 
 # MongoDB setup
 username = quote_plus('thissya129')
@@ -103,8 +99,6 @@ async def message(request: ValidateRequest):
         user_message = request.message
 
         # Extract date and collection (energy or solar) from user_message
-        # This is a simple example, you can use NLP to parse the date and collection type
-        # For now, assume the message contains the format "Give me solar data for 2023-09-01"
         if "solar" in user_message.lower():
             collection_name = "solar"
         elif "energy" in user_message.lower() or "electricity" in user_message.lower():
@@ -112,9 +106,8 @@ async def message(request: ValidateRequest):
         else:
             collection_name = None
 
-        # Extract date from message (you can refine this logic)
+        # Extract date from message
         date = None
-        # Check if there's a date in the message, assume format is 'YYYY-MM-DD'
         if "for" in user_message:
             try:
                 date = user_message.split("for")[1].strip()
