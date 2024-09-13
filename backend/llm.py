@@ -41,7 +41,7 @@ listener = ngrok.forward("127.0.0.1:8000", authtoken_from_env=True, domain="ster
 # MongoDB setup
 username = quote_plus('thissya129')
 password = quote_plus('Thissya129')
-uri = f'mongodb+srv://{username}:{password}@energymanagement.zn8ue.mongodb.net/?retryWrites=true&w=majority&appName=EnergyManagement'
+uri = f'mongodb+srv://thissya129:Thissya129@energymanagement.zn8ue.mongodb.net/?retryWrites=true&w=majority&appName=EnergyManagement'
 
 client = MongoClient()
 db = client['energy_management']  # Replace with your actual database name
