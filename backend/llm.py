@@ -7,6 +7,7 @@ from transformers import AutoTokenizer
 from time import time
 import ngrok
 from pymongo import MongoClient
+from urllib.parse import quote_plus
 
 app = FastAPI()
 
@@ -38,7 +39,11 @@ ngrok.set_auth_token("2lC10VNMNNHozy9qU2wBzosN3at_3QYjZW2FJ2sr1po7qXqqs")
 listener = ngrok.forward("127.0.0.1:8000", authtoken_from_env=True, domain="sterling-python-willingly.ngrok-free.app")
 
 # MongoDB setup
-client = MongoClient("mongodb+srv://<thissya129>:<Thissya129>@cluster0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+username = quote_plus('thissya129')
+password = quote_plus('Thissya129')
+uri = f'mongodb+srv://{username}:{password}@energymanagement.zn8ue.mongodb.net/?retryWrites=true&w=majority&appName=EnergyManagement'
+
+client = MongoClient(uri)
 db = client['energy_management']  # Replace with your actual database name
 
 user_histories = {}
